@@ -1,0 +1,90 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}管理界面{% endblock %}
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href=" {{ url_for('static',filename='css/admin.css') }}">
+{% endblock %}
+{% block navbar %}
+<div class="navbar" id="nav">
+	<div>
+		<img src="{{ url_for('static',filename='images/3.png') }}" alt="2.png" height="50px">
+	</div>
+	<div>
+		<a href=" {{ url_for('logout') }}" class="pull-right">登出</a>
+	</div>
+</div>
+{% endblock %}
+{% block content %}
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span12">
+			<div class="tabbable tabs-left" id="tabs-491547">
+				<ul class="nav nav-tabs">
+					<li class="active">
+						<a href="#panel-424588" data-toggle="tab">单品</a>
+					</li>
+					<li>
+						<a href="#panel-63955" data-toggle="tab">套餐</a>
+					</li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane" id="panel-424588">
+						<form id="form_insert_menu" onsubmit="return false" action="##" method="post">
+							<label for="ID" class="text-primary">编号</label>
+							<input type="text" placeholder="请输入编号 ,S开头,共8位" id="ID" class="input_menu"
+							       class="form-control"><br>
+							<label for="name" class="text-primary">名称</label>
+							<input type="text" placeholder="请输入名称" id="name" class="input_menu"
+							       class="form-control"><br>
+							<label for="price" class="text-primary">价格</label>
+							<input type="text" placeholder="请输入价格" id="price" class="input_menu" class="form-control">
+							<p>
+								<button class="btn btn-primary" type="button" onclick="insertMenu()">提交</button>
+								<input type="reset" value="重置" class="btn btn-default">
+
+							</p>
+						</form>
+					</div>
+					<div class="tab-pane active" id="panel-63955">
+						<form id="form_insert_mul" onsubmit="return false" action="##" method="post">
+							<label for="input_mul_ID" class="text-primary">编号</label>
+							<input type="text" placeholder="请输入编号" id="input_mul_ID" class="input_mul"
+							       class="form-control"><br>
+							<label for="input_mul_name" class="text-primary">名称</label>
+							<input type="text" placeholder="请输入名称" id="input_mul_name" class="input_mul"
+							       class="form-control"><br>
+							<label for="input_mul_mix" class="text-primary">组成菜品</label>
+							<select name="select_single" id="select_single">
+								<option value="">选择菜品</option>
+								{% for sin in single%}
+								<option value="{{sin[0]}}￥{{sin[2]}}">{{sin[1]}}￥{{sin[2]}}</option>
+								{% endfor %}
+							</select>
+							<input type="number" placeholder="数量" id="input_mul_num" class="input_num">
+							<input type="button" value="加入" onclick="insert_to_mul()"><br>
+							<input type="text" placeholder="请选择组成菜品" id="input_mul_mix" class="input_mul"
+							       class="form-control"><br>
+							<label for="input_mul_price" class="text-primary">价格</label>
+							<input type="text" placeholder="请输入价格" id="input_mul_price" class="input_mul"
+							       class="form-control">
+							<p>
+								<button class="btn btn-primary" type="button" onclick="insertMul()">提交</button>
+								<input type="reset" value="重置" class="btn btn-default">
+							</p>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div>
+	<p id="errmsg" class="text-danger"></p>
+</div>
+{% endblock %}
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static',filename='js/lib/jq.js') }}"></script>
+<script src="{{ url_for('static',filename='js/admin.js') }}"></script>
+{% endblock %}
+

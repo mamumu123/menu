@@ -1,0 +1,67 @@
+## 数据说明
+
+# 1 single 
+单菜品基本信息，列间用\tab隔开，列名含义：
+Sid: 菜品编号 string
+Sname: 菜品名称 string
+Sprice: 菜品价格 float
+
+
+# 2 combo 
+套餐基本信息，列间用\tab隔开，列名含义：
+Mid: 套餐编号 string
+Mname: 套餐名称 string
+Mprice: 套餐价格 float
+MlistId: 单菜品编号 string，格式：Sid,数量+Sid,数量
+MlistName: 单菜品名称 string，格式：Sname+Sname
+
+
+以上为基本数据，下面几个文件是初步整理过的，作业中可能会用到。
+
+# 3 priceDict.json 
+单菜品和套餐的价格信息，数据格式：
+'''
+{
+	套餐/单菜品ID(str):价格(float),
+	...
+}
+'''
+
+# 4 inforDict.json 
+套餐内容信息，即各个套餐中包含的单菜品种类和数量，数据格式：
+'''
+{
+	套餐ID(str):{单菜品ID(str):数量(int), ...},
+	...
+}
+'''
+
+# 5 inforMatrix.csv
+套餐内容信息的矩阵格式，行：套餐ID，列：单菜品ID，单元格数值表示套餐中该单菜品的数量。
+
+
+下面是点菜模块的测试数据。
+
+# 6 trial_data.json
+数据格式如下：
+'''
+"trial":[
+    { "input":{套餐/单品ID(str):套餐/单品数量(int),...},
+      "output:{套餐/单品ID(str):套餐/单品数量(int),...}",
+      "cost": 最低金额(float)},
+      
+    ...
+    
+    { "input":{套餐/单品ID(str):套餐/单品数量(int),...},
+      "output:{套餐/单品ID(str):套餐/单品数量(int),...}",
+      "cost": 最低金额(float)},
+]
+'''
+其中，
+input，顾客原始点菜组合，字典格式，key为套餐/单品ID，value为数量；
+output，计算出的最佳组合，和input一样是字典格式，key为套餐/单品ID，value为数量；
+cost，计算出的最低应付金额。
+
+为了方便助教评作业，还请各位同学在点菜系统之外，单独写一份点菜模块算法的代码，代码的输入输出就是json格式的input组成的list和output，cost的list。
+
+

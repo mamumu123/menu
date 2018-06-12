@@ -1,0 +1,179 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}点餐系统{% endblock %}
+{% block head %}
+{{ super() }}
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href=" {{ url_for('static',filename='css/index.css') }}">
+{% endblock %}
+
+{% block navbar %}
+<div class="navbar" id="nav">
+	<div>
+		<img src="{{ url_for('static',filename='images/3.png') }}" alt="2.png" height="50px">
+	</div>
+	<div>
+		<span>欢迎你 <span id="username" style="font-weight: 600">{{user}}</span>&nbsp&nbsp</span>
+		<a href=" {{ url_for('logout') }}" class="pull-right">登出</a>
+	</div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container col-md-12" id="app" v-cloak>
+	<div class="row">
+		<div class="tabbable col-md-6" id="tabs-360246">
+			<ul class="nav nav-tabs" id="nav-tabs">
+				<li class="active">
+					<a data-toggle="tab" href="#panel-470978">单品</a>
+				</li>
+				<li>
+					<a href="#panel-288048" data-toggle="tab">套餐</a>
+				</li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane active sin_div" id="panel-470978">
+					<!--单品-->
+					<table>
+						<thead>
+						<tr>
+							<th>编号</th>
+							<th>商品</th>
+							<th>单价</th>
+							<th>操作</th>
+						</tr>
+						</thead>
+
+						{% for k in all_message['tbSingle'] %}
+						<tr>
+							<td>{{k[0]}}</td>
+							<td>{{k[1]}}</td>
+							<td>{{k[2]}}</td>
+							<td>
+								<button class="addMenu_btn" @click="add_menu($event)">加入点菜单</button>
+							</td>
+						</tr>
+						{% endfor %}
+
+					</table>
+
+
+				</div>
+				<div class="tab-pane sin_div" id="panel-288048">
+					<!--套餐-->
+					<table>
+						<thead>
+						<tr>
+							<th>商品编号</th>
+							<th>套餐名</th>
+							<th>包含</th>
+							<th>价格</th>
+							<th>操作</th>
+						</tr>
+						</thead>
+						<tbody>
+						{% for k in all_message['tbMulti'] %}
+						<tr>
+							<td>{{k[0]}}</td>
+							<td>{{k[1]}}</td>
+							<td>
+								{% for per in all_message['zucheng'][k[0]] %}
+								<span>{{per[1]}}{{per[3]}}*{{per[2]}}￥{{per[4]}}</span><br>
+								{% endfor %}
+							</td>
+							<td>{{k[2]}}</td>
+							<td>
+								<button @click="add_mul($event)">加入点菜单</button>
+							</td>
+						<tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-6">
+			<div v-if="list.length>0 && car==1" id="main">
+				<!--购物车-->
+				购物车
+				<table class="dataintable">
+					<thead>
+					<tr>
+						<th>编号</th>
+						<th>商品名称</th>
+						<th>单价</th>
+						<th>数量</th>
+						<th>操作</th>
+						<th>选中</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr v-for="(key,index) in list">
+						<td v-text="key.id"></td>
+						<td v-text="key.name"></td>
+						<td v-text="key.price"></td>
+						<td>
+							<button @click="hangleReduce(index)">-</button>
+							<span v-text="key.count"></span>
+							<button @click="hangleUp(index)">+</button>
+						</td>
+						<td>
+							<button @click="handleRemove(index)">移除</button>
+						</td>
+						<td>
+							<input type="checkbox" v-model="key.complated"></td>
+					</tr>
+					</tbody>
+				</table>
+				<div>
+					总价：<p v-text="totalprice"></p>
+					<button calss="btn" @click="cal_sum()">去结算</button>
+					<div>
+						<span id="if_add"></span>
+						<button class="btn" @click="add_one()" value="add" v-if="dis">添加</button>
+					</div>
+				</div>
+			</div>
+			<div v-if="list.length==0 && car==1">
+				购物车为空
+			</div>
+			<div v-if="car==0" v-cloak>
+				正在支付
+				<table class="dataintable">
+					<thead>
+					<tr>
+						<th>编号</th>
+						<th>商品名称</th>
+						<th>单价</th>
+						<th>数量</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr v-for="(key,index) in new_list">
+						<td v-text="key.id"></td>
+						<td v-text="key.name"></td>
+						<td v-text="key.price"></td>
+						<td v-text="key.count"></td>
+					</tr>
+					</tbody>
+				</table>
+				<div>
+					总价：<p v-text="new_totalprice"></p>
+					<button class="btn" @click="sub_mit()">支付</button>
+					<div id="car_msg"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static',filename='js/lib/jq.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="{{ url_for('static',filename='js/index.js') }}"></script>
+{% endblock %}

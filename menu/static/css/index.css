@@ -1,0 +1,48 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+body [v-cloak] {
+  display: none;
+}
+body #nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #0080c0;
+  min-height: 100px;
+}
+body #nav a {
+  text-decoration-line: none;
+  color: white;
+}
+body #app #tabs-360246 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+body #app #tabs-360246 .sin_div {
+  width: 80%;
+}
+body #app table {
+  border-collapse: collapse;
+  margin: 0 auto;
+  width: 700px;
+}
+body #app table td,
+body #app table th {
+  border: 1px solid #cad9ea;
+  color: #666;
+  height: 30px;
+}
+body #app table thead th {
+  background-color: #CCE8EB;
+  width: 100px;
+}
+body #app table tr:nth-child(odd) {
+  background: #fff;
+}
+body #app table tr:nth-child(even) {
+  background: #F5FAFA;
+}
+/*# sourceMappingURL=index.css.map */

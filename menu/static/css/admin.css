@@ -1,0 +1,12 @@
+#nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #0080c0;
+  min-height: 100px;
+}
+#nav a {
+  color: white;
+  text-decoration-line: none;
+}
+/*# sourceMappingURL=admin.css.map */
